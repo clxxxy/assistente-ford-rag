@@ -1,0 +1,119 @@
+/* estilos gerais */
+.stApp {
+    background-color: #FFFFFF;
+    font-family: "Antenna", "Inter", "Source Sans Pro", sans-serif;
+    color: #011627;
+}
+
+/* títulos h1 */
+h1 {
+    text-align: center;
+    border-bottom: 2px solid #011627;
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Subtítulos */
+h3 {
+    text-align: center;
+    font-size: 1.15rem;
+    font-weight: 400;
+}
+
+/* Loading Spinner e Container */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+}
+.spinner {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 8px solid #ACBDC3;
+    border-top-color: #011627;
+    animation: spinner-anim 0.8s infinite linear;
+    margin: 1rem 0;
+}
+@keyframes spinner-anim {
+    to {
+    transform: rotate(360deg);
+    }
+}
+.loading-text {
+    text-align: center;
+    font-size: 1.05rem;
+    animation: textFadeIn 1.5s ease-in-out;
+}
+@keyframes textFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.stProgress {
+    display: none;
+}
+
+/* Mensagens Customizadas de Transição */
+.custom-message-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    background-color: #011627;
+    color: #FFFFFF;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+.custom-message-container h3 {
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+
+/* Spinner Pequeno para Respostas */
+.small-spinner-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: #555;
+    margin: 0.5rem 0 1rem 0;
+}
+.small-spinner {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 3px solid #E0E0E0; /* Cinza claro */
+    border-top-color: #ACBDC3; /* Cinza médio */
+    animation: spinner-anim 0.8s infinite linear;
+    margin-right: 0.75rem;
+}
+
+/* Cards de Pergunta e Resposta */
+.qa-card {
+    background-color: #ACBDC3;
+    border-radius: .75rem;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid #9eb0b6;
+}
+.question-header {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    opacity: 0.9;
+}
+.answer-body {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(1, 22, 39, 0.1);
+}
+
+/* Botões Personalizados */
+button[kind="secondary"] {
+    color: #011627;
+    background-color: #ACBDC3;
+}
