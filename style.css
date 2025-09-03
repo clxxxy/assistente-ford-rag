@@ -13,14 +13,14 @@ h1 {
     margin-bottom: 2rem;
 }
 
-/* Subtítulos */
+/* subtítulos */
 h3 {
     text-align: center;
     font-size: 1.15rem;
     font-weight: 400;
 }
 
-/* Loading Spinner e Container */
+/* loading spinner */
 .loading-container {
     display: flex;
     flex-direction: column;
@@ -55,7 +55,7 @@ h3 {
     display: none;
 }
 
-/* Mensagens Customizadas de Transição */
+/* mensagens customizadas de transição */
 .custom-message-container {
     display: flex;
     flex-direction: column;
@@ -75,7 +75,7 @@ h3 {
     margin-bottom: 1.5rem;
 }
 
-/* Spinner Pequeno para Respostas */
+/* spinner pequeno - "Pensando..." */
 .small-spinner-container {
     display: flex;
     align-items: center;
@@ -87,13 +87,13 @@ h3 {
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    border: 3px solid #E0E0E0; /* Cinza claro */
-    border-top-color: #ACBDC3; /* Cinza médio */
+    border: 3px solid #E0E0E0;
+    border-top-color: #ACBDC3;
     animation: spinner-anim 0.8s infinite linear;
     margin-right: 0.75rem;
 }
 
-/* Cards de Pergunta e Resposta */
+/* q&a */
 .qa-card {
     background-color: #ACBDC3;
     border-radius: .75rem;
@@ -112,7 +112,7 @@ h3 {
     border-top: 1px solid rgba(1, 22, 39, 0.1);
 }
 
-/* Botões Personalizados */
+/* botões */
 button[kind="secondary"] {
     color: #011627;
     background-color: #ACBDC3;
