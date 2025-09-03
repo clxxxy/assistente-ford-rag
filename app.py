@@ -75,7 +75,7 @@ def _get_chain():
         vs = _get_vs(pd, coll, emb)
         llm = _get_llm(llm_model)
         retriever = vs.as_retriever(
-            search_type="mmr",
+            search_type="mmr", # maximal marginal relevance -> para mais diversidade de contexto
             search_kwargs={"k": 8, "fetch_k": 40, "lambda_mult": 0.8},
         )
         st.session_state[key] = RetrievalQA.from_chain_type(

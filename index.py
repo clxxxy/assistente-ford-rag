@@ -60,6 +60,7 @@ def _index_pdf(pdf_path: str, persist_dir: str, collection: str, emb_model_name:
     if os.path.exists(persist_dir):
         shutil.rmtree(persist_dir)
 
+    # --- criação do vector store ---
     Chroma.from_documents(
         documents=chunks,
         embedding=embed,
