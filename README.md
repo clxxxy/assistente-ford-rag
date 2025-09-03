@@ -8,6 +8,13 @@ Uma aplicação com interface Streamlit que permite carregar um PDF, indexá-lo 
 3. [Decisões de Design](https://github.com/clxxxy/assistente-ford-rag/edit/main/README.md#decis%C3%B5es-de-design)
 4. [Engenharia de Prompt](https://github.com/clxxxy/assistente-ford-rag/edit/main/README.md#engenharia-de-prompt)
 5. [Pipeline Detalhada](https://github.com/clxxxy/assistente-ford-rag/edit/main/README.md#pipeline-detalhada-indexa%C3%A7%C3%A3o--chunkeriza%C3%A7%C3%A3o)
+6. [Embeddings](https://github.com/clxxxy/assistente-ford-rag/edit/main/README.md#embeddings)
+7. [SLM](https://github.com/clxxxy/assistente-ford-rag/edit/main/README.md#slm)
+8. [Como Executar a Aplicação](https://github.com/clxxxy/assistente-ford-rag/edit/main/README.md#como-executar-a-aplica%C3%A7%C3%A3o)
+9. [Como Usar a Aplicação](https://github.com/clxxxy/assistente-ford-rag/edit/main/README.md#como-usar-a-aplica%C3%A7%C3%A3o)
+10. [Limitações Conhecidas e Próximos Passos](https://github.com/clxxxy/assistente-ford-rag/edit/main/README.md#limita%C3%A7%C3%B5es-conhecidas-e-pr%C3%B3ximos-passos)
+
+- - -
 
 ## Visão geral
 
@@ -18,10 +25,44 @@ Este projeto demonstra um RAG para perguntas e respostas: o usuário o manual do
 - Recuperação: Retriever com MMR para equilíbrio entre relevância e diversidade.
 - SLM local: qwen2:1.5b via Ollama (local).
 
+> O vídeo de demonstração da aplicação está presente [neste link]().
+
+- - -
+
 ## Arquitetura
+
+```txt
+[Envio do PDF]
+     │
+     ▼
+[PyPDFLoader]
+     │  extrai texto por página
+     ▼
+[Chunkerização: RecursiveCharacterTextSplitter]
+     │  chunks (600) + overlap (150)
+     ▼
+[Embeddings: HuggingFaceEmbeddings]
+     │  vetores no espaço semântico
+     ▼
+[Vector Store: Chroma]
+     │  coleção por documento (doc_id)
+     ▼
+[Retriever: MMR (k=8, fetch_k=40, λ=0.8)]
+     │  seleção de passagens diversas e relevantes
+     ▼
+[Prompt + contexto]
+     │  injeta contexto e pergunta no prompt padrão
+     ▼
+[LLM (Ollama) — qwen2:1.5b]
+     │  gera resposta final
+     ▼
+[UI Streamlit: resposta + trechos + páginas aproximadas]
+```
 
 - app.py: UI, estado de sessão, criação da chain e retriever, exibição das fontes.
 - index.py: processamento do PDF, chunking, embeddings, criação/abertura do Chroma, salvamento do arquivo
+
+- - -
 
 ## Decisões de Design
 
@@ -31,6 +72,8 @@ Este projeto demonstra um RAG para perguntas e respostas: o usuário o manual do
 4. **SLM via Ollama:** qwen2:1.5b oferece baixo custo computacional e bom desempenho para respostas curtas, com fallback simples para modelos maiores (Mistral, Llama 3.x, etc.).
 5. **UI/UX:** interface inspirada nos sites oficiais da Ford, o usuário pode acompanhar o progresso do documento e o histórico das conversas, que contém as fonte dos trechos com página aproximada, que ajudam o usuário a encontrar e validar a informação no manual.
 
+- - -
+
 ## Engenharia de Prompt
 
 - Fixa o papel de “Assistente Técnico Ford” e restringe a resposta somente ao contexto, com objetivo de impedir alucinações. 
@@ -39,6 +82,8 @@ Este projeto demonstra um RAG para perguntas e respostas: o usuário o manual do
 - Extração literal e completa para preservar unidades, normas e símbolos, exigindo listar todas as variantes relevantes.
 - Em múltiplas correspondências, pede resumo curto + opções, focando em seções específicas quando o item é específico.
 - Formato previsível de resposta: começa com resposta direta, depois bullets de variantes/observações e proíbe conteúdo fora do contexto. 
+
+- - -
 
 ## Pipeline Detalhada (Indexação + Chunkerização)
 
@@ -61,18 +106,107 @@ Este projeto demonstra um RAG para perguntas e respostas: o usuário o manual do
     - RetrievalQA (LangChain) com chain_type="stuff": os chunks são “colados” diretamente no prompt.
     - Fontes: a UI exibe os trechos usados e a página aproximada para rápida verificação.
 
-## Embeddings e SLM
+- - -
 
-O modelo de embedding **paraphrase-multilingual-MiniLM-L12-v2** foi escolhido seguindo os seguintes parâmetros: Idioma, dimensionalidade, tamanho, licença, desempenho prático, custo e uso.
+## Embeddings
 
-> Os números de desempenho são gerais (MTEB/uso prático) e variam por hardware e corpus.
+O modelo de embedding **paraphrase-multilingual-MiniLM-L12-v2** foi escolhido por ser idealmente **multilingue** (inclusive pt-br) e por ser suficientemente **acertivo e rápido** para a aplicação construída: por indexar apenas um único manual (corpus pequeno) e por possuir um prompt construído que exige contexto e respostas estritas.
 
-| Modelo (HF/API)                                           |              Idioma |  Dim | Tamanho aprox. | Licença      | Desempenho prático |  Custo | Quando usar                                    |
-| --------------------------------------------------------- | ------------------: | ---: | -------------: | ------------ | -------------------: | -----: | ---------------------------------------------- |
-| **paraphrase-multilingual-MiniLM-L12-v2** (HF) *(utilizado)* |    Multi (incl. PT) |  384 |        \~120MB | permissiva   |    Bom/rápido em CPU |    \$0 | **Local leve**, protótipos multilíngues        |
-| **intfloat/e5-small-v2** (HF)                             | EN (multi limitado) |  384 |        \~120MB | Apache-2.0   |      Bom em busca EN |    \$0 | CPUs fracas; inglês dominante                  |
-| **intfloat/e5-large-v2** (HF)                             |                  EN | 1024 |        \~1.0GB | Apache-2.0   |          Ótimo em EN |    \$0 | Mais qualidade, máquina potente                |
-| **BAAI/bge-small-en-v1.5** (HF)                           |                  EN |  384 |        \~140MB | MIT          |        Bom e estável |    \$0 | Alternativa small em EN                        |
-| **BAAI/bge-m3** (HF)                                      |       Multi (forte) | 1024 |        \~1.3GB | MIT          |      Excelente multi |    \$0 | **Alta qualidade**, precisa de RAM             |
-| **OpenAI text-embedding-3-small** (API)                   |               Multi | 1536 |              — | Proprietária |            Muito bom |   \$\$ | Quando **latência/qualidade** via API compensa |
-| **OpenAI text-embedding-3-large** (API)                   |               Multi | 3072 |              — | Proprietária |                 SOTA | \$\$\$ | Altíssima qualidade, custo maior               |
+Abaixo, uma tabela comparativa com outros modelos de embeddings:
+
+| Modelo                                                       | Idioma              | Dim  | Tamanho aprox. | Desempenho prático   | Custo  | Quando usar                                    |
+| ------------------------------------------------------------ | ------------------: | ---: | -------------: | -------------------: | -----: | ---------------------------------------------- |
+| **paraphrase-multilingual-MiniLM-L12-v2** *(utilizado)*      |    Multi (incl. PT) |  384 |        \~120MB |    Bom/rápido em CPU |    \$0 | **Local leve**, protótipos multilíngues        |
+| **intfloat/e5-small-v2**                                     | EN (multi limitado) |  384 |        \~120MB |      Bom em busca EN |    \$0 | CPUs fracas; inglês dominante                  |
+| **intfloat/e5-large-v2**                                     |                  EN | 1024 |        \~1.0GB |          Ótimo em EN |    \$0 | Mais qualidade, hardware potente               |
+| **BAAI/bge-small-en-v1.5**                                   |                  EN |  384 |        \~140MB |        Bom e estável |    \$0 | Alternativa pequena em EN                      |
+| **OpenAI text-embedding-3-small** (API)                      |               Multi | 1536 |              — |            Muito bom |   \$\$ | Quando **latência/qualidade** via API compensa |
+| **OpenAI text-embedding-3-large** (API)                      |               Multi | 3072 |              — |            Muito bom | \$\$\$ | Altíssima qualidade, custo maior               |
+
+> “Desempenho prático”: equilíbrio de qualidade e latência para RAG de PDF, variando por hardware/corpus.
+
+- - -
+
+## SLM
+
+O modelo de linguagem **qwen2:1.5b** foi escolhido por ser **leve e rápido** em questão computacional, **rodar localmente e sem necessidade de GPU** e ser **bom em perguntas e respostas objetivas e diretas**.
+
+| Modelo (tag Ollama)            | Parâmetros | Contexto | Recurso típico | Qualidade (RAG curto)                  | Quando usar                          |
+| ------------------------------ | ---------: | -------: | -------------- | -------------------------------------- | ------------------------------------ |
+| **qwen2:1.5b** *(utilizado)*   |     \~1.5B |     4–8k | CPU ok         | Boa p/ perguntas e respostas objetivas | **Leve e rápido**, dev local         |
+| **phi3:3.8b-mini-instruct**    |     \~3.8B |       4k | CPU/GPU leve   | Boa p/ perguntas mais elaboradas       | Para contextos maiores e detalhistas |
+| **mistral:7b-instruct**        |       \~7B |       8k | GPU ideal      | Muito boa                              | Quando precisa raciocínio melhor     |
+| **llama3.1:8b-instruct**       |       \~8B |    8–16k | GPU ideal      | Muito boa / estável                    | Se tiver GPU e quiser mais qualidade |
+| **qwen2.5:7b-instruct**        |       \~7B |      8k+ | GPU ideal      | Muito boa                              | Alternativa moderna e forte          |
+
+- - -
+
+## Como Executar a Aplicação
+
+**Pré-requisitos:** [Python 3.10+](https://www.python.org/downloads/); [Ollama](https://ollama.com/).
+
+1. Clone e entre na pasta:
+```bash
+git clone <seu-repo>.git
+cd <seu-repo>
+```
+
+- Essa deve ser a estrutura da pasta:
+```pgsql
+.
+├─ app.py               # UI + chain de QA + retriever MMR + exibição de fontes
+├─ index.py             # indexação, chunking, embeddings e salvamento no Chroma
+├─ prompt.txt           # prompt padrão do sistema/estilo da resposta
+├─ style.css            # estilos da UI
+├─ uploads/             # PDFs enviados
+├─ vector_stores/       # índices Chroma por doc_id
+└─ README.md
+```
+
+2. Crie "venv" (recomendado):
+```bash
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+```
+
+3. Instale dependências do "requirements.txt":
+```bash
+pip install -r requirements.txt
+```
+
+4. Baixe o modelo no Ollama (padrão do projeto):
+```bash
+ollama pull qwen2:1.5b
+```
+
+5. Execute a aplicação:
+```bash
+streamlit run app.py
+```
+
+- - -
+
+## Como usar a aplicação:
+
+1. Envie o PDF do manual do seu veículo (link dos manuais oficiais da Ford para baixar está na tela).
+2. Aguarde a indexação.
+3. Faça perguntas no campo de texto (ex.: “qual óleo devo usar no motor?”).
+4. Após receber a resposta, você pode verificar a fonte da informação em “De onde tirei isso”.
+
+- - -
+
+## Limitações Conhecidas e Próximos Passos
+
+Limitações:
+- Um PDF por vez (coleção por doc_id). Para corpora maiores, inclua múltiplos PDFs na mesma coleção. 
+- SLM pequeno pode alucinar se faltarem evidências.
+
+Próximos passos:
+- Multi-documento: permitir adicionar vários PDFs à mesma coleção.
+- Re-ranking com modelos tipo *bge-reranker*.
+- Filtros por metadados (página, seção).
+- Avaliação automática com *Ragas* e testes de regressão.
+
+- - -
+
+> Assistente de Manual Ford | Desenvolvido por Cleydson Junior
