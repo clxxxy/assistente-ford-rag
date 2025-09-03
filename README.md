@@ -5,16 +5,16 @@ Uma aplicação com interface Streamlit que permite carregar um PDF, indexá-lo 
 
 ## Sumário
 
-1. [Visão Geral](https://github.com/clxxxy/assistente-ford-rag/edit/main/README.md#vis%C3%A3o-geral)
-2. [Arquitetura](https://github.com/clxxxy/assistente-ford-rag/edit/main/README.md#arquitetura)
-3. [Decisões de Design](https://github.com/clxxxy/assistente-ford-rag/edit/main/README.md#decis%C3%B5es-de-design)
-4. [Engenharia de Prompt](https://github.com/clxxxy/assistente-ford-rag/edit/main/README.md#engenharia-de-prompt)
-5. [Pipeline Detalhada](https://github.com/clxxxy/assistente-ford-rag/edit/main/README.md#pipeline-detalhada-indexa%C3%A7%C3%A3o--chunkeriza%C3%A7%C3%A3o)
-6. [Embeddings](https://github.com/clxxxy/assistente-ford-rag/edit/main/README.md#embeddings)
-7. [SLM](https://github.com/clxxxy/assistente-ford-rag/edit/main/README.md#slm)
-8. [Como Executar a Aplicação](https://github.com/clxxxy/assistente-ford-rag/edit/main/README.md#como-executar-a-aplica%C3%A7%C3%A3o)
-9. [Como Usar a Aplicação](https://github.com/clxxxy/assistente-ford-rag/edit/main/README.md#como-usar-a-aplica%C3%A7%C3%A3o)
-10. [Limitações Conhecidas e Próximos Passos](https://github.com/clxxxy/assistente-ford-rag/edit/main/README.md#limita%C3%A7%C3%B5es-conhecidas-e-pr%C3%B3ximos-passos)
+1. [Visão Geral](https://github.com/clxxxy/assistente-ford-rag?tab=readme-ov-file#vis%C3%A3o-geral)
+2. [Arquitetura](https://github.com/clxxxy/assistente-ford-rag?tab=readme-ov-file#arquitetura)
+3. [Decisões de Design](https://github.com/clxxxy/assistente-ford-rag?tab=readme-ov-file#decis%C3%B5es-de-design)
+4. [Engenharia de Prompt](https://github.com/clxxxy/assistente-ford-rag?tab=readme-ov-file#engenharia-de-prompt)
+5. [Pipeline Detalhada](https://github.com/clxxxy/assistente-ford-rag?tab=readme-ov-file#pipeline-detalhada-indexa%C3%A7%C3%A3o--chunkeriza%C3%A7%C3%A3o)
+6. [Embeddings](https://github.com/clxxxy/assistente-ford-rag?tab=readme-ov-file#embeddings)
+7. [SLM](https://github.com/clxxxy/assistente-ford-rag?tab=readme-ov-file#slm)
+8. [Como Executar a Aplicação](https://github.com/clxxxy/assistente-ford-rag?tab=readme-ov-file#como-executar-a-aplica%C3%A7%C3%A3o)
+9. [Como Usar a Aplicação](https://github.com/clxxxy/assistente-ford-rag?tab=readme-ov-file#como-usar-a-aplica%C3%A7%C3%A3o)
+10. [Limitações Conhecidas e Próximos Passos](https://github.com/clxxxy/assistente-ford-rag?tab=readme-ov-file#limita%C3%A7%C3%B5es-conhecidas-e-pr%C3%B3ximos-passos)
 
 - - -
 
