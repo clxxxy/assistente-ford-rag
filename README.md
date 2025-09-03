@@ -27,7 +27,7 @@ Este projeto demonstra um RAG para perguntas e respostas: o usuário o manual do
 - Recuperação: Retriever com MMR para equilíbrio entre relevância e diversidade.
 - SLM local: qwen2:1.5b via Ollama (local).
 
-> O vídeo de demonstração da aplicação está presente [neste link]().
+> O vídeo de demonstração da aplicação está presente [neste link](https://mega.nz/file/jLhAGbwR#-QAMepK4pHb-4bTUJ1rMj0EKIIyTrUjbINDjoh11bmM).
 
 - - -
 
