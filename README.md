@@ -1,3 +1,5 @@
+<img src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Ford_logo_flat.svg/1000px-Ford_logo_flat.svg.png' width='150'/>
+
 # Assistente de Manual Ford — Pipeline RAG
 Uma aplicação com interface Streamlit que permite carregar um PDF, indexá-lo em um Vector Store Chroma com embeddings HuggingFace, e consultar via SLM local (Ollama) com recuperação (RAG).
 
@@ -157,9 +159,10 @@ cd <seu-repo>
 ├─ app.py               # UI + chain de QA + retriever MMR + exibição de fontes
 ├─ index.py             # indexação, chunking, embeddings e salvamento no Chroma
 ├─ prompt.txt           # prompt padrão do sistema/estilo da resposta
+├─ requirements.txt     # arquivo com as dependências da aplicação
 ├─ style.css            # estilos da UI
-├─ uploads/             # PDFs enviados
-├─ vector_stores/       # índices Chroma por doc_id
+├─ uploads/             # PDFs enviados, após o primeiro envio
+├─ vector_stores/       # índices Chroma por doc_id, após o primeiro envio
 └─ README.md
 ```
 
@@ -189,9 +192,18 @@ streamlit run app.py
 ## Como usar a aplicação:
 
 1. Envie o PDF do manual do seu veículo (link dos manuais oficiais da Ford para baixar está na tela).
+<img src="https://i.imgur.com/I8eekEL.png" alt="Tela de Envio">
+
 2. Aguarde a indexação.
+<img src="https://i.imgur.com/48MPlau.png" alt="Tela de Carregamento">
+
 3. Faça perguntas no campo de texto (ex.: “qual óleo devo usar no motor?”).
-4. Após receber a resposta, você pode verificar a fonte da informação em “De onde tirei isso”.
+<img src="https://i.imgur.com/kd92XK6.png" alt="Tela do Chat"> 
+
+4. As perguntas e respostas ficam salvas no campo "Histórico".
+<img src="https://i.imgur.com/4tWm5o2.png" alt="Tela do Histórico">
+
+> Você pode verificar de onde a informação foi tirada do manual clicando em "De onde tirei isso".
 
 - - -
 
