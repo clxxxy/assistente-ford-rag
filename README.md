@@ -18,7 +18,7 @@ Uma aplicação com interface Streamlit que permite carregar um PDF, indexá-lo 
 
 ### Considerações Iniciais
 
-Todo o projeto foi implementado priorizando **baixo custo computacional**, devido a máquina ao qual o mesmo foi desenvolvido (8gb RAM, 512 SSD e sem placa de vídeo dedicada). Portanto, o uso de um modelo de embedding ou SLM mais poderoso pode ser facilmente configurado e ajustado diretamente no código.
+Todo o projeto foi implementado priorizando **baixo custo computacional**, devido a máquina ao qual o mesmo foi desenvolvido (8gb RAM, 512 SSD e sem placa de vídeo dedicada). Portanto, o uso de um modelo de embedding ou SLM mais poderoso pode ser facilmente configurado e ajustado diretamente no código. O projeto, também, foi implementado com foco na **qualidade das respostas finais ao usuário, clean code e reprodutibilidade.**
 
 Para facilitar testes, você pode usar o [Manual do Ford Ka 2013](https://github.com/clxxxy/assistente-ford-rag/blob/main/manual_ka_2013.pdf) já presente no repositório.
 
