@@ -16,11 +16,11 @@ Uma aplicação com interface Streamlit que permite carregar um PDF, indexá-lo 
 9. [Como Usar a Aplicação](https://github.com/clxxxy/assistente-ford-rag?tab=readme-ov-file#como-usar-a-aplica%C3%A7%C3%A3o)
 10. [Limitações Conhecidas e Próximos Passos](https://github.com/clxxxy/assistente-ford-rag?tab=readme-ov-file#limita%C3%A7%C3%B5es-conhecidas-e-pr%C3%B3ximos-passos)
 
-- - -
-
 ### Considerações Iniciais
 
 Todo o projeto foi implementando priorizando **baixo custo computacional**, devido a máquina ao qual o mesmo foi desenvolvido (8gb RAM, 512 SSD e sem placa de vídeo dedicada). Portanto, o uso de um modelo de embedding ou SLM mais poderoso pode ser facilmente configurado e ajustado diretamente no código.
+
+- Para facilitar testes, você pode usar o [Manual do Ford Ka 2013](https://github.com/clxxxy/assistente-ford-rag/blob/main/manual_ka_2013.pdf) já presente no repositório.
 
 - - -
 
