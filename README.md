@@ -18,7 +18,7 @@ Uma aplicação com interface Streamlit que permite carregar um PDF, indexá-lo 
 
 ### Considerações Iniciais
 
-Todo o projeto foi implementando priorizando **baixo custo computacional**, devido a máquina ao qual o mesmo foi desenvolvido (8gb RAM, 512 SSD e sem placa de vídeo dedicada). Portanto, o uso de um modelo de embedding ou SLM mais poderoso pode ser facilmente configurado e ajustado diretamente no código.
+Todo o projeto foi implementado priorizando **baixo custo computacional**, devido a máquina ao qual o mesmo foi desenvolvido (8gb RAM, 512 SSD e sem placa de vídeo dedicada). Portanto, o uso de um modelo de embedding ou SLM mais poderoso pode ser facilmente configurado e ajustado diretamente no código.
 
 Para facilitar testes, você pode usar o [Manual do Ford Ka 2013](https://github.com/clxxxy/assistente-ford-rag/blob/main/manual_ka_2013.pdf) já presente no repositório.
 
@@ -26,7 +26,7 @@ Para facilitar testes, você pode usar o [Manual do Ford Ka 2013](https://github
 
 ## Visão geral
 
-Este projeto demonstra um RAG para perguntas e respostas: o usuário o manual do veículo do veículo Ford em PDF, o sistema fragmenta o conteúdo (chunks), gera embeddings e salva em um ChromaDB, uma cadeia de recuperação consulta os trechos mais relevantes e monta um prompt para o SLM responder com as fontes.
+Este projeto demonstra um RAG para perguntas e respostas: o usuário o manual do veículo Ford em PDF, o sistema fragmenta o conteúdo (chunks), gera embeddings e salva em um ChromaDB, uma cadeia de recuperação consulta os trechos mais relevantes e monta um prompt para o SLM responder com as fontes.
 
 - Frontend: Streamlit com UI para upload, progresso de indexação e histórico de Q&A. 
 - Indexação: PyPDFLoader → RecursiveCharacterTextSplitter → HuggingFaceEmbeddings → Chroma. 
@@ -78,7 +78,7 @@ Este projeto demonstra um RAG para perguntas e respostas: o usuário o manual do
 2. **Embeddings HuggingFace (CPU):** evita dependência de API; **paraphrase-multilingual-MiniLM-L12-v2** é pequeno, multilíngue e eficiente, ideal para execução local e com baixo custo computacional.
 3. **MMR no retriever:** reduz redundância entre passagens similares e melhora cobertura de tópicos (evita “eco” dos mesmos trechos).
 4. **SLM via Ollama:** qwen2:1.5b oferece baixo custo computacional e bom desempenho para respostas curtas, com fallback simples para modelos maiores (Mistral, Llama 3.x, etc.).
-5. **UI/UX:** interface inspirada nos sites oficiais da Ford, o usuário pode acompanhar o progresso do documento e o histórico das conversas, que contém as fonte dos trechos com página aproximada, que ajudam o usuário a encontrar e validar a informação no manual.
+5. **UI/UX:** interface inspirada nos sites oficiais da Ford, o usuário pode acompanhar o progresso do documento e o histórico das conversas, que contém as fontes dos trechos com página aproximada, que ajudam o usuário a encontrar e validar a informação no manual.
 
 - - -
 
