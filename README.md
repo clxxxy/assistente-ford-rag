@@ -18,6 +18,12 @@ Uma aplicação com interface Streamlit que permite carregar um PDF, indexá-lo 
 
 - - -
 
+### Considerações Iniciais
+
+Todo o projeto foi implementando priorizando **baixo custo computacional**, devido a máquina ao qual o mesmo foi desenvolvido (8gb RAM, 512 SSD e sem placa de vídeo dedicada). Portanto, o uso de um modelo de embedding ou SLM mais poderoso pode ser facilmente configurado e ajustado diretamente no código.
+
+- - -
+
 ## Visão geral
 
 Este projeto demonstra um RAG para perguntas e respostas: o usuário o manual do veículo do veículo Ford em PDF, o sistema fragmenta o conteúdo (chunks), gera embeddings e salva em um ChromaDB, uma cadeia de recuperação consulta os trechos mais relevantes e monta um prompt para o SLM responder com as fontes.
