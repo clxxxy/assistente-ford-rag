@@ -227,4 +227,7 @@ Próximos passos:
 
 - - -
 
+### Licença
+
+Este projeto foi desenvolvido para avaliação do processo seletivo da Ford, organizado pelo IEL - Bahia.
 > Assistente de Manual Ford | Desenvolvido por Cleydson Junior
